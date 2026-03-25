@@ -41,7 +41,7 @@ nav.compact { padding:14px 60px; }
   .nav-links.open { right:0; }
   .nav-links a { font-size:13px;letter-spacing:.18em; }
 }
-.nav-overlay { position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:240;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;pointer-events:none; }
+.nav-overlay { position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;pointer-events:none; }
 .nav-overlay.open { opacity:1;visibility:visible;pointer-events:auto; }
 
 /* HERO */
