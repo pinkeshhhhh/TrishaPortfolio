@@ -235,30 +235,39 @@ document.addEventListener('DOMContentLoaded', () => {
     if(counterEl) counterEl.textContent = `${(currentCardIndex + 1).toString().padStart(2, '0')} / ${workItems.length}`;
     
     domCards.forEach((card, i) => {
-      card.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s';
+      card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s, box-shadow 0.5s';
       card.style.pointerEvents = 'none';
       
       if (i < currentCardIndex) {
-        // Swiped away
+        // Swiped away (handled in swipeTopCard)
       } else if (i === currentCardIndex) {
         // Top card
-        card.style.transform = 'translateY(0) scale(1)';
+        card.style.transform = 'translate(0, 0) scale(1) rotate(0deg)';
         card.style.opacity = '1';
         card.style.zIndex = 10;
         card.style.pointerEvents = 'auto';
+        card.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(232, 192, 106, 0.2)';
       } else if (i === currentCardIndex + 1) {
-        // Second card
-        card.style.transform = 'translateY(12px) scale(0.95)';
-        card.style.opacity = '1';
+        // Second card (peek left/rotated)
+        card.style.transform = 'translateY(10px) scale(0.96) rotate(-3.5deg)';
+        card.style.opacity = '0.95';
         card.style.zIndex = 9;
+        card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(232, 192, 106, 0.12)';
       } else if (i === currentCardIndex + 2) {
-        // Third card
-        card.style.transform = 'translateY(24px) scale(0.9)';
-        card.style.opacity = '1';
+        // Third card (peek right/rotated)
+        card.style.transform = 'translateY(20px) scale(0.92) rotate(3deg)';
+        card.style.opacity = '0.9';
         card.style.zIndex = 8;
+        card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(232, 192, 106, 0.08)';
+      } else if (i === currentCardIndex + 3) {
+        // Fourth card (faintly visible stack depth)
+        card.style.transform = 'translateY(30px) scale(0.88) rotate(-1.5deg)';
+        card.style.opacity = '0.5';
+        card.style.zIndex = 7;
+        card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(232, 192, 106, 0.05)';
       } else {
         // Hidden
-        card.style.transform = 'translateY(40px) scale(0.85)';
+        card.style.transform = 'translateY(40px) scale(0.84) rotate(0deg)';
         card.style.opacity = '0';
         card.style.zIndex = 1;
       }
@@ -297,6 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       isDragging = true;
       startX = e.clientX;
+      currentX = e.clientX; // Ensure correct initialization to prevent instantaneous swipe
       const card = domCards[currentCardIndex];
       card.style.transition = 'none';
       workSection.classList.remove('show-hint');
@@ -312,11 +322,11 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.transform = `translateX(${deltaX}px) rotate(${rotate}deg)`;
     });
 
-    window.addEventListener('pointerup', (e) => {
+    const handleRelease = (e) => {
       if (!isDragging || currentCardIndex >= domCards.length) return;
       isDragging = false;
       const deltaX = currentX - startX;
-      const threshold = window.innerWidth * 0.15; // commit threshold
+      const threshold = Math.min(window.innerWidth * 0.15, 120); // sensible dynamic threshold
       
       const card = domCards[currentCardIndex];
       
@@ -325,10 +335,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         // snap back
         card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        card.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+        card.style.transform = 'translate(0, 0) scale(1) rotate(0deg)';
       }
       startX = 0; currentX = 0;
-    });
+    };
+
+    window.addEventListener('pointerup', handleRelease);
+    window.addEventListener('pointercancel', handleRelease);
   };
 
   buildStack();
@@ -356,10 +369,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. REELS MODAL
   // -----------------------------
   const reelsData = [
-    { id: 'DT8LdexEqbJ', title: 'Mid-Form Celebrity Edit', desc: 'Social Media', img: 'images/vlog-routine-thumbnail.png' },
-    { id: 'DQw01UbkrWm', title: 'Women in Love', desc: 'Short Reel', img: 'images/picsart-3.png' },
-    { id: 'DSbuHJHkhEJ', title: 'Kiara Advani Edit', desc: 'Fan Edit', img: 'images/kiara-advani-design.png' },
-    { id: 'DQraUbUkie3', title: 'Short-Form Content', desc: 'Social Media', img: 'images/picsart-4.png' }
+    { id: 'DT8LdexEqbJ', title: 'Mid-Form Celebrity Edit', desc: 'Social Media', img: 'https://i.pinimg.com/736x/35/8d/c1/358dc12cb6009f28cc2eef113c81168e.jpg' },
+    { id: 'DQw01UbkrWm', title: 'Women in Love', desc: 'Short Reel', img: 'https://i.pinimg.com/736x/a3/6e/bc/a36ebc55fcbe8e88f00dd8a9fd1cbc94.jpg' },
+    { id: 'DSbuHJHkhEJ', title: 'Kiara Advani Edit', desc: 'Fan Edit', img: 'https://i.pinimg.com/736x/c7/98/a6/c798a66e7d4765f2d700843aafee2286.jpg' },
+    { id: 'DQraUbUkie3', title: 'Short-Form Content', desc: 'Social Media', img: 'https://i.pinimg.com/736x/82/90/25/82902575d2b4c5d6a88a50fce2f772e4.jpg' }
   ];
 
   const reelsTrack = document.getElementById('reels-track');

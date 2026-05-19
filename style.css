@@ -722,6 +722,7 @@ body.cursor-link .cursor-ring {
   margin: 0 auto;
   cursor: grab;
   user-select: none;
+  touch-action: none; /* Prevent scroll trigger on swipe gestures */
 }
 
 .stack-container:active {
@@ -737,6 +738,8 @@ body.cursor-link .cursor-ring {
   overflow: hidden;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(232, 192, 106, 0.08);
   transform-origin: center bottom;
+  touch-action: none; /* Direct touch interaction for swipe animations */
+  user-select: none;
 }
 
 .work-card img {
@@ -901,50 +904,19 @@ body.cursor-link .cursor-ring {
 }
 
 .about-container {
-  max-width: 1400px;
+  max-width: 900px;
   margin: 0 auto 80px;
-  display: grid;
-  grid-template-columns: 45fr 55fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.about-left {
   display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.about-photo-wrapper {
-  width: 100%;
-  max-width: 400px;
-  aspect-ratio: 4/5;
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  transform: rotate(2deg);
-}
-
-.about-photo-wrapper::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  transform: rotate(-4deg);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.about-photo-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.about-photo-wrapper:hover img {
-  transform: scale(1.04);
+.about-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .about-right h2 {
@@ -952,6 +924,7 @@ body.cursor-link .cursor-ring {
   line-height: 1.1;
   margin-top: 16px;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .about-body {
@@ -962,15 +935,19 @@ body.cursor-link .cursor-ring {
   flex-direction: column;
   gap: 20px;
   margin-bottom: 40px;
+  text-align: center;
 }
 
 /* Stats Row */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 40px;
   border-top: 1px solid var(--smoke);
   padding-top: 40px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .stat-item {
