@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // -----------------------------
   const starsContainer = document.getElementById('starsContainer');
   if (starsContainer) {
-    const starCount = 50;
+    const isMobileDevice = window.innerWidth <= 768 || 'ontouchstart' in window;
+    const starCount = isMobileDevice ? 18 : 50;
+    const frag = document.createDocumentFragment();
+    
     for (let i = 0; i < starCount; i++) {
       const topPct = (Math.random() * 100).toFixed(2);
       const leftPct = (Math.random() * 100).toFixed(2);
@@ -13,34 +16,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const duration = (Math.random() * 4 + 2).toFixed(1);
       const delay = (Math.random() * 5).toFixed(1);
       
-      const isSparkle = Math.random() > 0.72;
+      const isSparkle = !isMobileDevice && Math.random() > 0.72;
       
       if (isSparkle) {
         const sparkle = document.createElement('div');
         sparkle.className = 'bg-star-sparkle';
-        sparkle.style.top = `${topPct}%`;
-        sparkle.style.left = `${leftPct}%`;
-        sparkle.style.animationDuration = `${parseFloat(duration) + 2}s`;
-        sparkle.style.animationDelay = `${delay}s`;
+        sparkle.style.cssText = `top:${topPct}%;left:${leftPct}%;animation-duration:${parseFloat(duration)+2}s;animation-delay:${delay}s`;
         const svgSize = Math.floor(parseFloat(size) * 4);
-        sparkle.innerHTML = `
-          <svg width="${svgSize}" height="${svgSize}" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10 0C10.5 5.2 14.8 9.5 20 10C14.8 10.5 10.5 14.8 10 20C9.5 14.8 5.2 10.5 0 10C5.2 9.5 9.5 5.2 10 0Z"/>
-          </svg>
-        `;
-        starsContainer.appendChild(sparkle);
+        sparkle.innerHTML = `<svg width="${svgSize}" height="${svgSize}" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0C10.5 5.2 14.8 9.5 20 10C14.8 10.5 10.5 14.8 10 20C9.5 14.8 5.2 10.5 0 10C5.2 9.5 9.5 5.2 10 0Z"/></svg>`;
+        frag.appendChild(sparkle);
       } else {
         const star = document.createElement('div');
         star.className = 'bg-star';
-        star.style.top = `${topPct}%`;
-        star.style.left = `${leftPct}%`;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.animationDuration = `${duration}s`;
-        star.style.animationDelay = `${delay}s`;
-        starsContainer.appendChild(star);
+        star.style.cssText = `top:${topPct}%;left:${leftPct}%;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:${delay}s`;
+        frag.appendChild(star);
       }
     }
+    starsContainer.appendChild(frag);
   }
 
   // -----------------------------
@@ -71,12 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -----------------------------
-  // 2. CUSTOM CURSOR
+  // 2. CUSTOM CURSOR (Desktop only — skip on touch devices)
   // -----------------------------
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   const cursorRing = document.querySelector('.cursor-ring');
   const cursorDot = document.querySelector('.cursor-dot');
   
-  if (cursorRing && cursorDot) {
+  if (cursorRing && cursorDot && !isTouchDevice) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let ringX = mouseX;
@@ -96,21 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     requestAnimationFrame(renderCursor);
 
-    const setupCursorHovers = () => {
-      document.querySelectorAll('[data-cursor="grow"]').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
-      });
-      
-      document.querySelectorAll('a:not([data-cursor="grow"]), button:not([data-cursor="grow"])').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-link'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-link'));
-      });
-    };
+    document.querySelectorAll('[data-cursor="grow"]').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
+    });
     
-    setupCursorHovers();
-    const observer = new MutationObserver(setupCursorHovers);
-    observer.observe(document.body, { childList: true, subtree: true });
+    document.querySelectorAll('a:not([data-cursor="grow"]), button:not([data-cursor="grow"])').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-link'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-link'));
+    });
+  } else if (cursorRing && cursorDot) {
+    cursorRing.style.display = 'none';
+    cursorDot.style.display = 'none';
   }
 
   // -----------------------------
@@ -123,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       header.classList.remove('scrolled');
     }
-  });
+  }, { passive: true });
 
   const hamburger = document.querySelector('.hamburger');
   const mobileNav = document.querySelector('.mobile-nav');
@@ -188,12 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // -----------------------------
   const workItems = [
     { title: 'Online Course Poster', category: 'Poster Design · Education', img: 'images/online-course-poster.png' },
-    { title: 'Vlog YouTube Thumbnail', category: 'Thumbnail · Content', img: 'images/vlog-routine-thumbnail.png' },
-    { title: 'Café Open Hours Poster', category: 'Poster Design · Brand', img: 'images/cafe-poster.png' },
-    { title: 'Coffee Menu Design', category: 'Menu Design · Print', img: 'images/coffee-menu.png' },
+    { title: 'Vlog YouTube Thumbnail', category: 'Thumbnail · Content', img: 'images/vlog-routine-thumbnail.jpg' },
+    { title: 'Café Open Hours Poster', category: 'Poster Design · Brand', img: 'images/cafe-poster.jpg' },
+    { title: 'Coffee Menu Design', category: 'Menu Design · Print', img: 'images/coffee-menu.jpg' },
     { title: 'Kiara Advani Fan Edit', category: 'Celebrity Design · Visual', img: 'images/kiara-advani-design.png' },
     { title: 'Science Event Poster', category: 'Poster Design · Education', img: 'images/science-event-poster.png' },
-    { title: 'Fashion Instagram Post', category: 'Social Media · Fashion', img: 'images/fashion-instagram-post.png' },
+    { title: 'Fashion Instagram Post', category: 'Social Media · Fashion', img: 'images/fashion-instagram-post.jpg' },
     { title: 'Creative Digital Art 1', category: 'Digital Art · Visual Edit', img: 'images/picsart-1.png' },
     { title: 'Creative Digital Art 2', category: 'Digital Art · Visual Edit', img: 'images/picsart-2.png' },
     { title: 'Creative Digital Art 3', category: 'Digital Art · Visual Edit', img: 'images/picsart-3.png' },
@@ -261,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'work-card';
       card.innerHTML = `
-        <img src="${item.img}" alt="${item.title}" loading="lazy">
+        <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async">
         <div class="work-card-overlay">
           <div class="work-meta">
             <span class="work-num">${numStr}</span>
@@ -290,28 +280,28 @@ document.addEventListener('DOMContentLoaded', () => {
       if (i < currentCardIndex) {
         // swiped away
       } else if (i === currentCardIndex) {
-        card.style.transform = 'translate(0, 0) scale(1) rotate(0deg)';
+        card.style.transform = 'translate3d(0, 0, 0) scale(1) rotate(0deg)';
         card.style.opacity = '1';
         card.style.zIndex = 10;
         card.style.pointerEvents = 'auto';
         card.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(139, 30, 46, 0.3)';
       } else if (i === currentCardIndex + 1) {
-        card.style.transform = 'translateY(10px) scale(0.96) rotate(-3.5deg)';
+        card.style.transform = 'translate3d(0, 10px, 0) scale(0.96) rotate(-3.5deg)';
         card.style.opacity = '0.95';
         card.style.zIndex = 9;
         card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(139, 30, 46, 0.2)';
       } else if (i === currentCardIndex + 2) {
-        card.style.transform = 'translateY(20px) scale(0.92) rotate(3deg)';
+        card.style.transform = 'translate3d(0, 20px, 0) scale(0.92) rotate(3deg)';
         card.style.opacity = '0.9';
         card.style.zIndex = 8;
         card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(139, 30, 46, 0.15)';
       } else if (i === currentCardIndex + 3) {
-        card.style.transform = 'translateY(30px) scale(0.88) rotate(-1.5deg)';
+        card.style.transform = 'translate3d(0, 30px, 0) scale(0.88) rotate(-1.5deg)';
         card.style.opacity = '0.5';
         card.style.zIndex = 7;
         card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(139, 30, 46, 0.1)';
       } else {
-        card.style.transform = 'translateY(40px) scale(0.84) rotate(0deg)';
+        card.style.transform = 'translate3d(0, 40px, 0) scale(0.84) rotate(0deg)';
         card.style.opacity = '0';
         card.style.zIndex = 1;
       }
@@ -333,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rotate = direction === 'left' ? -25 : 25;
     
     card.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s';
-    card.style.transform = `translate(${throwX}px, -50px) rotate(${rotate}deg)`;
+    card.style.transform = `translate3d(${throwX}px, -50px, 0) rotate(${rotate}deg)`;
     card.style.opacity = '0';
     
     currentCardIndex++;
@@ -352,6 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let isDragging = false;
     let startX = 0;
     let currentX = 0;
+    let dragRafId = null;
+    
+    // Prevent scroll interference on the card stack
+    stackContainer.style.touchAction = 'pan-y';
     
     stackContainer.addEventListener('pointerdown', (e) => {
       if (currentCardIndex >= domCards.length) return;
@@ -365,18 +359,27 @@ document.addEventListener('DOMContentLoaded', () => {
       workSection.classList.remove('show-hint');
     });
 
-    window.addEventListener('pointermove', (e) => {
+    const updateDragVisual = () => {
       if (!isDragging || currentCardIndex >= domCards.length) return;
-      currentX = e.clientX;
       const deltaX = currentX - startX;
       const card = domCards[currentCardIndex];
       const rotate = deltaX * 0.08;
-      card.style.transform = `translateX(${deltaX}px) rotate(${rotate}deg)`;
+      card.style.transform = `translate3d(${deltaX}px, 0, 0) rotate(${rotate}deg)`;
+      dragRafId = null;
+    };
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging || currentCardIndex >= domCards.length) return;
+      currentX = e.clientX;
+      if (!dragRafId) {
+        dragRafId = requestAnimationFrame(updateDragVisual);
+      }
     });
 
     const handleRelease = () => {
       if (!isDragging || currentCardIndex >= domCards.length) return;
       isDragging = false;
+      if (dragRafId) { cancelAnimationFrame(dragRafId); dragRafId = null; }
       const deltaX = currentX - startX;
       const threshold = Math.min(window.innerWidth * 0.15, 120);
       const card = domCards[currentCardIndex];
@@ -384,8 +387,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (Math.abs(deltaX) > threshold) {
         swipeTopCard(deltaX > 0 ? 'right' : 'left');
       } else {
-        card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        card.style.transform = 'translate(0, 0) scale(1) rotate(0deg)';
+        card.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        card.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
       }
       startX = 0; currentX = 0;
     };
@@ -656,12 +659,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollTopBtn = document.getElementById('scroll-top');
   
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      scrollTopBtn.classList.add('visible');
-    } else {
-      scrollTopBtn.classList.remove('visible');
+    if (scrollTopBtn) {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
     }
-  });
+  }, { passive: true });
 
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', () => {

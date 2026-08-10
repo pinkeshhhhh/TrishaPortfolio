@@ -74,32 +74,33 @@ body {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+  contain: strict;
 }
 
 .bg-star {
   position: absolute;
   border-radius: 50%;
   background: var(--white-bright);
-  box-shadow: 0 0 8px rgba(230, 176, 184, 0.8), 0 0 16px rgba(232, 192, 106, 0.5);
+  will-change: opacity;
   animation: starTwinkle 3.5s ease-in-out infinite alternate;
 }
 
 .bg-star-sparkle {
   position: absolute;
   color: var(--gold-pale);
-  filter: drop-shadow(0 0 10px rgba(230, 176, 184, 0.7));
+  will-change: opacity, transform;
   animation: starSparkleRotate 5s linear infinite alternate;
 }
 
 @keyframes starTwinkle {
-  0% { opacity: 0.15; transform: scale(0.7); }
-  50% { opacity: 0.95; transform: scale(1.3); }
-  100% { opacity: 0.2; transform: scale(0.8); }
+  0% { opacity: 0.15; }
+  50% { opacity: 0.95; }
+  100% { opacity: 0.2; }
 }
 
 @keyframes starSparkleRotate {
   0% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
-  50% { opacity: 0.9; transform: scale(1.2) rotate(45deg); filter: drop-shadow(0 0 16px rgba(232, 192, 106, 0.9)); }
+  50% { opacity: 0.9; transform: scale(1.2) rotate(45deg); }
   100% { opacity: 0.3; transform: scale(0.9) rotate(90deg); }
 }
 
@@ -302,8 +303,7 @@ body.cursor-link .cursor-ring {
   right: 40px;
   z-index: 450;
   pointer-events: none;
-  transition: transform 0.15s ease-out;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 12px rgba(232, 192, 106, 0.3));
+  will-change: transform;
 }
 
 .cat-body-container {
@@ -364,6 +364,35 @@ body.cursor-link .cursor-ring {
 }
 
 @media (max-width: 768px) {
+  /* Mobile Performance: reduce star count visually, disable sparkle SVGs */
+  .bg-star-sparkle {
+    display: none;
+  }
+  .bg-star {
+    animation-duration: 6s;
+  }
+  .stars-container {
+    opacity: 0.6;
+  }
+  /* Disable expensive backdrop-filters on mobile */
+  #header.scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg-void);
+  }
+  /* Reduce hero glow blur on mobile */
+  .hero-glow {
+    filter: blur(30px);
+    opacity: 0.5;
+  }
+  .bg-gradient-blob {
+    filter: blur(40px);
+    opacity: 0.3;
+  }
+  /* Simplify hero doodle filter */
+  .hero-doodle-img {
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7));
+  }
   .floating-star-container {
     top: 14%;
     right: 20px;
@@ -721,7 +750,7 @@ body.cursor-link .cursor-ring {
   width: 340px;
   height: 340px;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(50px);
   z-index: 0;
   pointer-events: none;
 }
@@ -775,7 +804,7 @@ body.cursor-link .cursor-ring {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(139, 30, 46, 0.15) 0%, transparent 70%);
   z-index: 1;
-  filter: blur(120px);
+  filter: blur(60px);
   animation: blobPulse 12s infinite alternate;
 }
 
