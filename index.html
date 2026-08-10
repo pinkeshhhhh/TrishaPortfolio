@@ -9,11 +9,14 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&family=Yeseva+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=1.2">
+  <link rel="stylesheet" href="style.css?v=2.0">
 </head>
 <body>
+  <!-- Animated Dynamic Background Stars & Dark Sky -->
+  <div class="stars-container" id="starsContainer" aria-hidden="true"></div>
+
   <!-- Custom Cursor -->
   <div class="cursor-ring"></div>
   <div class="cursor-dot"></div>
@@ -21,6 +24,77 @@
   <!-- Loader -->
   <div id="loader">
     <div class="loader-logo">T<span>.</span></div>
+  </div>
+
+  <!-- Floating Mascot Elements (Cat + Star) -->
+  <div class="floating-star-container" id="floatingStar" aria-hidden="true" data-cursor="grow" title="Sparkle ✦">
+    <svg class="star-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z" fill="currentColor"/>
+    </svg>
+    <div class="star-glow"></div>
+  </div>
+
+  <div class="walking-cat-wrapper" id="walkingCat" aria-label="Walking mascot cat">
+    <div class="cat-body-container">
+      <svg class="cat-svg" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Realistic White Cat with Golden Tabby Body Stripes -->
+        <g class="cat-group">
+          <!-- Animated Graceful Tail (Right side, White with Golden Rings) -->
+          <g class="cat-tail">
+            <path d="M92 34 C100 32 108 24 105 12 C103 6 98 8 100 14 C102 22 96 30 89 33 Z" fill="#FFFFFF"/>
+            <path d="M102 22 C104 18 102 14 100 14 C99 16 100 20 101 22 Z" fill="#E8C06A"/>
+            <path d="M98 28 C100 24 98 20 96 20 C95 22 96 26 97 28 Z" fill="#D49E35"/>
+            <path d="M94 33 C96 29 94 25 92 25 C91 27 92 31 93 33 Z" fill="#E8C06A"/>
+          </g>
+
+          <!-- Hind Left Leg (Shadowed, Clean Solid Grey-White, NO Stripes, Angled Forward Towards Face) -->
+          <g class="paw paw-b2">
+            <path d="M82 36 L74 58 C73 62 70 62 68 62 L77 58 L86 36 Z" fill="#D8D0C8"/>
+          </g>
+
+          <!-- Front Left Leg (Shadowed, Clean Solid Grey-White, NO Stripes, Angled Forward Towards Face) -->
+          <g class="paw paw-f2">
+            <path d="M42 36 L34 58 C33 62 30 62 28 62 L37 58 L45 36 Z" fill="#D8D0C8"/>
+          </g>
+
+          <!-- Main Body Torso (Anatomical Feline Silhouette: Head at Left) -->
+          <path d="M18 24 C14 24 10 20 12 16 C14 12 20 14 26 18 C32 12 36 14 36 17 L38 22 C44 24 55 26 70 26 C82 26 90 30 92 36 C88 42 78 44 65 44 C50 44 38 42 32 36 C28 36 22 34 18 24 Z" fill="#FFFFFF"/>
+          
+          <!-- Alert Ears -->
+          <polygon points="18,16 14,5 22,12" fill="#FFFFFF"/>
+          <polygon points="17,14 15,7 20,12" fill="#E6B0B8" opacity="0.75"/>
+          <polygon points="26,16 25,7 30,13" fill="#EAE4DE"/>
+          <polygon points="26,14 25,8 29,12" fill="#E6B0B8" opacity="0.6"/>
+
+          <!-- Body Depth Shadow -->
+          <path d="M34 37 C42 42 56 44 68 43 C78 42 86 38 90 36 C84 41 72 44 60 44 C46 44 36 42 34 37 Z" fill="#E0D8D0"/>
+
+          <!-- Golden Tabby Body Stripes (Torso & Flank ONLY — NO Stripes on Legs) -->
+          <path d="M42 27 C44 32 41 38 39 40 C41 38 43 32 41 27 Z" stroke="#E8C06A" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M52 27 C54 33 51 40 48 42 C51 40 53 33 51 27 Z" stroke="#D49E35" stroke-width="3" stroke-linecap="round"/>
+          <path d="M62 27 C64 33 61 40 58 42 C61 40 63 33 61 27 Z" stroke="#E8C06A" stroke-width="3" stroke-linecap="round"/>
+          <path d="M72 28 C74 33 71 39 68 41 C71 39 73 33 71 28 Z" stroke="#D49E35" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M82 30 C84 34 81 38 78 40 C81 38 83 34 81 30 Z" stroke="#E8C06A" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- Hind Right Leg (Foreground, Clean Solid White, NO Stripes, Angled Forward Towards Face) -->
+          <g class="paw paw-b1">
+            <path d="M86 36 L78 58 C77 62 74 62 72 62 L81 58 L90 36 Z" fill="#FFFFFF"/>
+          </g>
+
+          <!-- Front Right Leg (Foreground, Clean Solid White, NO Stripes, Angled Forward Towards Face) -->
+          <g class="paw paw-f1">
+            <path d="M46 36 L38 58 C37 62 34 62 32 62 L41 58 L49 36 Z" fill="#FFFFFF"/>
+          </g>
+
+          <!-- Facial Features -->
+          <ellipse cx="20" cy="20" rx="2" ry="2.8" transform="rotate(15 20 20)" fill="#F2C94C"/>
+          <ellipse cx="20" cy="20" rx="0.8" ry="2.2" transform="rotate(15 20 20)" fill="#090607"/>
+          <polygon points="12,21 11,23 14,23" fill="#E6B0B8"/>
+          <line x1="12" y1="22" x2="2" y2="20" stroke="#D49E35" stroke-width="0.8"/>
+          <line x1="12" y1="24" x2="3" y2="25" stroke="#D49E35" stroke-width="0.8"/>
+        </g>
+      </svg>
+    </div>
   </div>
 
   <!-- Header / Navigation -->
@@ -86,12 +160,12 @@
   <section class="marquee-section">
     <div class="marquee-track track-top">
       <div class="marquee-content">
-        ✦  Graphic Design  ·  Video Editing  ·  Brand Identity  ·  Visual Storytelling  ·  Content Creation  ✦  Graphic Design  ·  Video Editing  ·  Brand Identity  ·  Visual Storytelling  ·  Content Creation
+        ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation
       </div>
     </div>
     <div class="marquee-track track-bottom">
       <div class="marquee-content">
-        ✦  Graphic Design  ·  Video Editing  ·  Brand Identity  ·  Visual Storytelling  ·  Content Creation  ✦  Graphic Design  ·  Video Editing  ·  Brand Identity  ·  Visual Storytelling  ·  Content Creation
+        ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation
       </div>
     </div>
   </section>
@@ -120,8 +194,7 @@
         <div class="eyebrow">01 — ABOUT</div>
         <h2>A Creative Mind<br>at Work.</h2>
         <div class="about-body">
-          <p>Hi, I'm Trisha Pandey — a passionate beginner in graphic design and video editing, eager to turn creative ideas into visually engaging designs and compelling videos. I enjoy exploring colors, typography, and motion to create content that communicates clearly and leaves a lasting impression.</p>
-          <p>As I continue learning and improving, I focus on attention to detail, creativity, and delivering work that reflects both originality and professionalism. I aim to create designs that are modern and meaningful — always growing, always creating.</p>
+          <p>I'm Trisha Pandey — a graphic designer and video editor who thrives on transforming raw ideas into polished visual stories. From short-form social content and podcast edits to brand-focused design, I bring sharp attention to detail and a deep love for typography, color, and motion. Every project is a chance to craft something that looks intentional, feels authentic, and connects with its audience.</p>
         </div>
         
         <div class="stats-row" id="stats">
@@ -176,7 +249,7 @@
           <div class="s-title">Graphic Design</div>
           <div class="s-arrow">→</div>
         </div>
-        <div class="service-desc">Creating stunning visuals, from posters to full brand identities.</div>
+        <div class="service-desc">Creating stunning visuals, from promotional posters to bespoke digital assets.</div>
       </div>
       <div class="service-pill" data-cursor="grow">
         <div class="service-header">
@@ -184,15 +257,31 @@
           <div class="s-title">Video Editing</div>
           <div class="s-arrow">→</div>
         </div>
-        <div class="service-desc">Transforming raw footage into compelling stories.</div>
+        <div class="service-desc">Transforming raw footage into compelling stories with sharp cuts and rhythm.</div>
       </div>
       <div class="service-pill" data-cursor="grow">
         <div class="service-header">
           <div class="s-icon">✦</div>
-          <div class="s-title">Brand Design</div>
+          <div class="s-title">Brand Detailing</div>
           <div class="s-arrow">→</div>
         </div>
-        <div class="service-desc">Building memorable and cohesive brand aesthetics.</div>
+        <div class="service-desc">Refining design aesthetics, typography detailing, and visual consistency across all brand touchpoints.</div>
+      </div>
+      <div class="service-pill" data-cursor="grow">
+        <div class="service-header">
+          <div class="s-icon">⚡</div>
+          <div class="s-title">Short-Form Editor</div>
+          <div class="s-arrow">→</div>
+        </div>
+        <div class="service-desc">High-retention, dynamic edits for Reels, Shorts & TikTok (60 seconds to 90 seconds, up to 2 minutes max).</div>
+      </div>
+      <div class="service-pill" data-cursor="grow">
+        <div class="service-header">
+          <div class="s-icon">🎙</div>
+          <div class="s-title">Podcast Editor</div>
+          <div class="s-arrow">→</div>
+        </div>
+        <div class="service-desc">Multi-cam syncing, seamless audio clean-up, pacing, and engaging highlight cuts for video & audio podcasts.</div>
       </div>
       <div class="service-pill" data-cursor="grow">
         <div class="service-header">
@@ -200,7 +289,7 @@
           <div class="s-title">Content Creation</div>
           <div class="s-arrow">→</div>
         </div>
-        <div class="service-desc">Designing assets tailored for social media impact.</div>
+        <div class="service-desc">Designing assets tailored for social media engagement and digital impact.</div>
       </div>
       <div class="service-pill" data-cursor="grow">
         <div class="service-header">
@@ -208,7 +297,7 @@
           <div class="s-title">Visual Storytelling</div>
           <div class="s-arrow">→</div>
         </div>
-        <div class="service-desc">Conveying deep narratives through visual mediums.</div>
+        <div class="service-desc">Conveying deep narratives through visual mediums, rhythm, and framing.</div>
       </div>
       <div class="service-pill" data-cursor="grow">
         <div class="service-header">
@@ -216,7 +305,39 @@
           <div class="s-title">Typography & Color</div>
           <div class="s-arrow">→</div>
         </div>
-        <div class="service-desc">Mastering text and hues for perfect harmony.</div>
+        <div class="service-desc">Mastering type hierarchy, kinetic text dynamics, and rich color palettes for visual harmony.</div>
+      </div>
+      <!-- PENDING: Music Video Editing Category (Pending copy from Trisha — to be added here) -->
+    </div>
+
+    <!-- Editing Specialties Grid -->
+    <div class="specialties-section reveal d3">
+      <div class="specialties-header">
+        <span class="spec-label">CORE FOCUS</span>
+        <h3>Editing Specialties</h3>
+      </div>
+      <div class="specialties-grid">
+        <div class="specialty-card" data-cursor="grow">
+          <div class="spec-icon">🎙</div>
+          <h4>Podcast Editor</h4>
+          <p>Seamless multi-cam syncing, dialogue cleanup, pacing, and viral clip extraction.</p>
+        </div>
+        <div class="specialty-card" data-cursor="grow">
+          <div class="spec-icon">◇</div>
+          <h4>Typography Editor</h4>
+          <p>Kinetic subtitle animations, expressive title treatments, and typographic layout precision.</p>
+        </div>
+        <div class="specialty-card" data-cursor="grow">
+          <div class="spec-icon">✦</div>
+          <h4>Motion Graphics Editor</h4>
+          <p>Custom graphic overlays, smooth transitions, lower thirds, and animated visual accents.</p>
+        </div>
+        <div class="specialty-card" data-cursor="grow">
+          <div class="spec-icon">⚡</div>
+          <h4>Short-Form Editor</h4>
+          <p class="spec-highlight">60 seconds to 90 seconds, up to 2 minutes max</p>
+          <p>Hook-first pacing, sound design, and viral retention edits for Reels & TikTok.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -226,30 +347,47 @@
     <div class="section-label reveal">03 — TOOLKIT</div>
     <h2 class="reveal d1">My Toolkit.</h2>
     <div class="tools-cloud reveal d2">
-      <!-- Standard open source SVG icons -->
+      <!-- 1. Photoshop -->
       <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M3 3h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm4.5 5.5v7h2v-2.2h1.6c1.6 0 2.8-.9 2.8-2.4 0-1.6-1.1-2.4-2.8-2.4H7.5zm2 1.6h1.2c.7 0 1.2.3 1.2.8s-.5.8-1.2.8H9.5v-1.6zm7 2.1c-.8 0-1.4.3-1.8.7l.8 1.1c.3-.3.6-.5 1-.5.4 0 .7.2.7.5 0 .2-.2.4-.6.5l-.8.3c-1.1.4-1.6 1-1.6 1.8 0 1.2.9 2 2.2 2 .9 0 1.6-.4 2-.8l-.8-1.1c-.3.3-.7.5-1.1.5-.4 0-.7-.2-.7-.5 0-.3.2-.4.6-.5l.8-.3c1.2-.4 1.7-1 1.7-1.8 0-1.2-.9-1.9-2.3-1.9z"/>
+        </svg>
         Photoshop
       </div>
+      <!-- 2. Premiere Pro -->
       <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21.92 5.09l-3-3a1.003 1.003 0 00-1.42 0L2.09 17.5a1 1 0 000 1.41l3 3c.39.39 1.02.39 1.41 0L21.91 6.5c.39-.39.4-1.02.01-1.41z"/></svg>
-        Illustrator
-      </div>
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-        After Effects
-      </div>
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M3 3h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3.5 5.5v7h2v-2.2h1.5c1.6 0 2.7-.9 2.7-2.4 0-1.6-1.1-2.4-2.7-2.4H6.5zm2 1.6h1.2c.6 0 1.1.3 1.1.8s-.5.8-1.1.8H8.5v-1.6zm6.5 2.1v3.3h1.8v-1.8c0-.6.4-1 1-1h.2v-1.7c-.8 0-1.4.4-1.8.9v-.7H15z"/>
+        </svg>
         Premiere Pro
       </div>
+      <!-- 3. DaVinci Resolve -->
       <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
-        Canva
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 4.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5S8.5 10.38 8.5 9s1.12-2.5 2.5-2.5zm-4 8c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5S7 15.88 7 14.5zm8 1c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        DaVinci Resolve
       </div>
+      <!-- 4. Adobe Express -->
       <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-3H8v-3h3V7.5C11 6.12 12.12 5 13.5 5H16v3h-2.5c-.28 0-.5.22-.5.5v2H16v3h-3v3h-2z"/></svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 2L2 19.5h7l2-4 1.5 3h3.5L12 2zm0 5.5l2.5 5h-5L12 7.5zM17 19.5h5L17.5 11l-2.5 5 2 3.5z"/>
+        </svg>
+        Adobe Express
+      </div>
+      <!-- 5. Figma -->
+      <div class="tool-tag" data-cursor="grow">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-3H8v-3h3V7.5C11 6.12 12.12 5 13.5 5H16v3h-2.5c-.28 0-.5.22-.5.5v2H16v3h-3v3h-2z"/>
+        </svg>
         Figma
+      </div>
+      <!-- 6. Canva -->
+      <div class="tool-tag" data-cursor="grow">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/>
+        </svg>
+        Canva
       </div>
     </div>
     <div class="quote-block reveal d3">
@@ -273,7 +411,7 @@
       <div class="ig-icon">IG</div>
       <div class="ig-info">
         <div class="ig-handle">@kiaracxfilms</div>
-        <div class="ig-sub">Follow for more edits</div>
+        <div class="ig-sub">Follow for more edits & visual storytelling</div>
       </div>
       <a href="https://www.instagram.com/kiaracxfilms" target="_blank" class="ig-btn" data-cursor="grow">Visit Profile →</a>
     </div>
@@ -285,7 +423,7 @@
       <div class="contact-left reveal">
         <div class="eyebrow">05 — CONTACT</div>
         <h2>Let's Create<br>Together.</h2>
-        <p class="contact-body">Have a project in mind? Whether it's a brand identity, a poster, or a video edit — I'd love to hear about it.</p>
+        <p class="contact-body">Have a project in mind? Whether it's a brand detailing project, podcast edit, or short-form video edit — I'd love to hear about it.</p>
         
         <div class="contact-list">
           <a href="mailto:trishapanday37@gmail.com" class="contact-row" data-cursor="grow">
@@ -379,6 +517,6 @@
     <button class="modal-nav modal-next" data-cursor="grow">→</button>
   </div>
 
-  <script src="script.js?v=1.2"></script>
+  <script src="script.js?v=2.0"></script>
 </body>
 </html>
