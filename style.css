@@ -180,10 +180,42 @@ body.cursor-link .cursor-ring {
   height: 44px;
   background: rgba(139, 30, 46, 0.2);
   border-color: var(--gold-light);
+/* Cursor Star Trail */
+.cursor-star-trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  overflow: hidden;
+  contain: strict;
+}
+
+.cursor-star-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  animation: cursorStarFade 0.65s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes cursorStarFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(0.8) rotate(var(--rot, 45deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx, 0px) * 1.6), calc(-50% + var(--dy, 0px) * 1.6 + 6px)) scale(0.1) rotate(calc(var(--rot, 45deg) * 2));
+  }
 }
 
 @media (max-width: 1024px) {
-  .cursor-ring, .cursor-dot {
+  .cursor-ring, .cursor-dot, .cursor-star-trail {
     display: none !important;
   }
 }

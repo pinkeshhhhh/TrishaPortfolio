@@ -63,22 +63,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -----------------------------
-  // 2. CUSTOM CURSOR (Desktop only — skip on touch devices)
+  // 2. CUSTOM CURSOR & STAR TRAIL (Desktop only — skip on touch devices)
   // -----------------------------
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   const cursorRing = document.querySelector('.cursor-ring');
   const cursorDot = document.querySelector('.cursor-dot');
+  const cursorStarTrail = document.getElementById('cursorStarTrail');
   
   if (cursorRing && cursorDot && !isTouchDevice) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let ringX = mouseX;
     let ringY = mouseY;
+    let lastStarX = 0;
+    let lastStarY = 0;
+    let lastStarTime = 0;
+
+    const starColors = ['#E8C06A', '#E6B0B8', '#FFFFFF', '#F5C6CB', '#D49E35'];
+
+    const spawnCursorStar = (x, y) => {
+      if (!cursorStarTrail) return;
+      const star = document.createElement('div');
+      star.className = 'cursor-star-particle';
+      
+      const size = Math.floor(Math.random() * 8 + 8); // 8px to 16px
+      const color = starColors[Math.floor(Math.random() * starColors.length)];
+      const dx = (Math.random() * 30 - 15).toFixed(1) + 'px';
+      const dy = (Math.random() * 20 - 10).toFixed(1) + 'px';
+      const rot = (Math.random() * 90 - 45).toFixed(1) + 'deg';
+      
+      star.style.left = `${x}px`;
+      star.style.top = `${y}px`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.color = color;
+      star.style.setProperty('--dx', dx);
+      star.style.setProperty('--dy', dy);
+      star.style.setProperty('--rot', rot);
+      
+      star.innerHTML = `
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C12.5 6.5 17.5 11.5 24 12C17.5 12.5 12.5 17.5 12 24C11.5 17.5 6.5 12.5 0 12C6.5 11.5 11.5 6.5 12 0Z"/>
+        </svg>
+      `;
+      
+      cursorStarTrail.appendChild(star);
+      setTimeout(() => star.remove(), 700);
+    };
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+      
+      // Spawn star particle on cursor movement if distance or time threshold reached
+      const now = performance.now();
+      const dist = Math.hypot(mouseX - lastStarX, mouseY - lastStarY);
+      if (dist > 16 && now - lastStarTime > 30) {
+        spawnCursorStar(mouseX, mouseY);
+        lastStarX = mouseX;
+        lastStarY = mouseY;
+        lastStarTime = now;
+      }
     });
 
     const renderCursor = () => {
@@ -98,9 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-link'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-link'));
     });
-  } else if (cursorRing && cursorDot) {
-    cursorRing.style.display = 'none';
-    cursorDot.style.display = 'none';
+  } else {
+    if (cursorRing) cursorRing.style.display = 'none';
+    if (cursorDot) cursorDot.style.display = 'none';
+    if (cursorStarTrail) cursorStarTrail.style.display = 'none';
   }
 
   // -----------------------------
