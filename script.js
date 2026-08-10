@@ -63,31 +63,78 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -----------------------------
-  // 2. CUSTOM CURSOR (Desktop only — skip on touch devices)
+  // 2. CUSTOM STAR DESIGNED CURSOR (Desktop only — skip on touch devices)
   // -----------------------------
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const cursorRing = document.querySelector('.cursor-ring');
-  const cursorDot = document.querySelector('.cursor-dot');
+  const starCursor = document.getElementById('starCursor');
+  const starRing = document.querySelector('.star-cursor-ring');
+  const starTrail = document.getElementById('starCursorTrail');
   
-  if (cursorRing && cursorDot && !isTouchDevice) {
+  if (starCursor && !isTouchDevice) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let ringX = mouseX;
     let ringY = mouseY;
+    let lastSparkleX = 0;
+    let lastSparkleY = 0;
+    let lastSparkleTime = 0;
+
+    const sparkleColors = ['#E8C06A', '#E6B0B8', '#FFFFFF', '#F5C6CB'];
+
+    const spawnSparkle = (x, y) => {
+      if (!starTrail) return;
+      const sparkle = document.createElement('div');
+      sparkle.className = 'star-trail-particle';
+      
+      const size = Math.floor(Math.random() * 6 + 6); // 6px to 12px
+      const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+      const dx = (Math.random() * 24 - 12).toFixed(1) + 'px';
+      const dy = (Math.random() * 24 - 12).toFixed(1) + 'px';
+      const rot = (Math.random() * 90 - 45).toFixed(1) + 'deg';
+      
+      sparkle.style.left = `${x}px`;
+      sparkle.style.top = `${y}px`;
+      sparkle.style.width = `${size}px`;
+      sparkle.style.height = `${size}px`;
+      sparkle.style.color = color;
+      sparkle.style.setProperty('--dx', dx);
+      sparkle.style.setProperty('--dy', dy);
+      sparkle.style.setProperty('--rot', rot);
+      
+      sparkle.innerHTML = `
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C12.5 6.5 17.5 11.5 24 12C17.5 12.5 12.5 17.5 12 24C11.5 17.5 6.5 12.5 0 12C6.5 11.5 11.5 6.5 12 0Z"/>
+        </svg>
+      `;
+      
+      starTrail.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 550);
+    };
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+      starCursor.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+      
+      const now = performance.now();
+      const dist = Math.hypot(mouseX - lastSparkleX, mouseY - lastSparkleY);
+      if (dist > 18 && now - lastSparkleTime > 40) {
+        spawnSparkle(mouseX, mouseY);
+        lastSparkleX = mouseX;
+        lastSparkleY = mouseY;
+        lastSparkleTime = now;
+      }
     });
 
-    const renderCursor = () => {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      cursorRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-      requestAnimationFrame(renderCursor);
+    const renderCursorRing = () => {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      if (starRing) {
+        starRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
+      }
+      requestAnimationFrame(renderCursorRing);
     };
-    requestAnimationFrame(renderCursor);
+    requestAnimationFrame(renderCursorRing);
 
     document.querySelectorAll('[data-cursor="grow"]').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
@@ -98,9 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-link'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-link'));
     });
-  } else if (cursorRing && cursorDot) {
-    cursorRing.style.display = 'none';
-    cursorDot.style.display = 'none';
+  } else {
+    if (starCursor) starCursor.style.display = 'none';
+    if (starRing) starRing.style.display = 'none';
+    if (starTrail) starTrail.style.display = 'none';
   }
 
   // -----------------------------
