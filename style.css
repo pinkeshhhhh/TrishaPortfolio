@@ -647,7 +647,7 @@ body.cursor-link .cursor-ring {
   box-shadow: 0 12px 30px rgba(168, 40, 64, 0.5);
 }
 
-/* Hero Right: Organic Blob Image */
+/* Hero Right: Couture Doodle Portrait Container */
 .hero-right {
   display: flex;
   justify-content: center;
@@ -656,39 +656,64 @@ body.cursor-link .cursor-ring {
   z-index: 2;
 }
 
-.hero-blob {
-  width: 380px;
-  height: 440px;
+.hero-doodle-container {
+  width: 280px;
+  height: 400px;
   position: relative;
-  overflow: hidden;
-  clip-path: url(#blob-clip);
-  -webkit-clip-path: url(#blob-clip);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   z-index: 2;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-  animation: blobMorph 10s ease-in-out infinite alternate;
 }
 
-.hero-blob img {
-  width: 100%;
+.hero-doodle-backdrop {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 340px;
+  border-radius: 160px 160px 30px 30px;
+  background: radial-gradient(circle at 50% 35%, rgba(139, 30, 46, 0.4) 0%, rgba(24, 16, 19, 0.7) 60%, rgba(9, 6, 7, 0.85) 100%);
+  border: 1px solid rgba(168, 40, 64, 0.3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 0 24px rgba(139, 30, 46, 0.2);
+  z-index: 1;
+}
+
+.hero-doodle-img {
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transition: transform 0.8s ease;
+  width: auto;
+  max-width: 120%;
+  object-fit: contain;
+  object-position: center bottom;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 16px rgba(139, 30, 46, 0.25));
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.hero-blob:hover img {
-  transform: scale(1.05);
+.hero-doodle-container:hover .hero-doodle-img {
+  transform: translateY(-6px) scale(1.02);
 }
 
 .hero-right::after {
   content: '';
   position: absolute;
-  inset: -12px;
-  border: 1.5px dashed rgba(168, 40, 64, 0.4);
-  border-radius: 48% 52% 56% 44% / 45% 55% 45% 55%;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 360px;
+  border: 1.5px dashed rgba(168, 40, 64, 0.35);
+  border-radius: 170px 170px 36px 36px;
   z-index: 1;
   pointer-events: none;
-  animation: haloRotate 16s linear infinite;
+  animation: haloFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes haloFloat {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-8px); }
 }
 
 .hero-glow {
@@ -789,8 +814,8 @@ body.cursor-link .cursor-ring {
 @media (max-width: 960px) {
   #hero {
     grid-template-columns: 1fr;
-    padding: 140px 24px 80px;
-    gap: 60px;
+    padding: 120px 20px 60px;
+    gap: 40px;
     text-align: center;
   }
   .hero-left {
@@ -799,10 +824,40 @@ body.cursor-link .cursor-ring {
   .hero-tagline {
     border-left: none;
     padding-left: 0;
+    font-size: 15px;
+    margin-bottom: 28px;
   }
-  .hero-blob {
-    width: 290px;
-    height: 340px;
+  .hero-right {
+    order: -1;
+  }
+  .hero-doodle-container {
+    width: 180px;
+    height: 260px;
+  }
+  .hero-doodle-backdrop {
+    width: 170px;
+    height: 220px;
+    border-radius: 100px 100px 20px 20px;
+  }
+  .hero-doodle-img {
+    max-width: 110%;
+  }
+  .hero-right::after {
+    width: 185px;
+    height: 235px;
+    border-radius: 110px 110px 24px 24px;
+  }
+  .hero-badge {
+    bottom: -5px;
+    left: -10px;
+    font-size: 10px;
+    padding: 8px 16px;
+    transform: rotate(-8deg);
+  }
+  .hero-glow {
+    width: 200px;
+    height: 200px;
+    filter: blur(60px);
   }
   .scroll-indicator {
     display: none;
