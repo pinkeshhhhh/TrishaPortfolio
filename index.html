@@ -2,529 +2,273 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trisha Pandey — Portfolio</title>
-  <meta name="description" content="Portfolio of Trisha Pandey, Graphic Designer & Video Editor.">
-  
-  <!-- Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Trisha Pandey — Graphic Designer & Video Editor</title>
+  <meta name="description" content="Portfolio of Trisha Pandey — Graphic Designer & Video Editor. Visual storyteller and brand builder.">
+  <meta name="theme-color" content="#F2EBE1">
+  <meta property="og:title" content="Trisha Pandey — Graphic Designer & Video Editor">
+  <meta property="og:description" content="Bringing brands to life through design and video.">
+  <meta property="og:image" content="images/TrishaDoodle.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="style.css?v=2.0">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="images/web/TrishaDoodle_transparent.webp">
+  <link rel="stylesheet" href="style.css?v=4.1">
 </head>
-<body>
-  <!-- Animated Dynamic Background Stars & Dark Sky -->
-  <div class="stars-container" id="starsContainer" aria-hidden="true"></div>
+<body class="is-loading">
 
-  <!-- Custom Star Designed Cursor -->
-  <div class="star-cursor-ring"></div>
-  <div class="star-cursor" id="starCursor" aria-hidden="true">
-    <div class="star-cursor-glow"></div>
-    <svg class="star-cursor-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 0C12.5 6.5 17.5 11.5 24 12C17.5 12.5 12.5 17.5 12 24C11.5 17.5 6.5 12.5 0 12C6.5 11.5 11.5 6.5 12 0Z" fill="currentColor"/>
-      <circle cx="12" cy="12" r="2.5" fill="#FFFFFF"/>
-    </svg>
-  </div>
-  <div class="star-cursor-trail" id="starCursorTrail" aria-hidden="true"></div>
-
-  <!-- Loader -->
-  <div id="loader">
-    <div class="loader-logo">T<span>.</span></div>
-  </div>
-
-  <!-- Floating Mascot Elements (Cat + Star) -->
-  <div class="floating-star-container" id="floatingStar" aria-hidden="true" data-cursor="grow" title="Sparkle ✦">
-    <svg class="star-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z" fill="currentColor"/>
-    </svg>
-    <div class="star-glow"></div>
-  </div>
-
-  <div class="walking-cat-wrapper" id="walkingCat" aria-label="Walking mascot cat">
-    <div class="cat-body-container">
-      <svg class="cat-svg" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Realistic White Cat with Golden Tabby Body Stripes -->
-        <g class="cat-group">
-          <!-- Animated Graceful Tail (Right side, White with Golden Rings) -->
-          <g class="cat-tail">
-            <path d="M92 34 C100 32 108 24 105 12 C103 6 98 8 100 14 C102 22 96 30 89 33 Z" fill="#FFFFFF"/>
-            <path d="M102 22 C104 18 102 14 100 14 C99 16 100 20 101 22 Z" fill="#E8C06A"/>
-            <path d="M98 28 C100 24 98 20 96 20 C95 22 96 26 97 28 Z" fill="#D49E35"/>
-            <path d="M94 33 C96 29 94 25 92 25 C91 27 92 31 93 33 Z" fill="#E8C06A"/>
-          </g>
-
-          <!-- Hind Left Leg (Shadowed, Clean Solid Grey-White, NO Stripes, Angled Forward Towards Face) -->
-          <g class="paw paw-b2">
-            <path d="M82 36 L74 58 C73 62 70 62 68 62 L77 58 L86 36 Z" fill="#D8D0C8"/>
-          </g>
-
-          <!-- Front Left Leg (Shadowed, Clean Solid Grey-White, NO Stripes, Angled Forward Towards Face) -->
-          <g class="paw paw-f2">
-            <path d="M42 36 L34 58 C33 62 30 62 28 62 L37 58 L45 36 Z" fill="#D8D0C8"/>
-          </g>
-
-          <!-- Main Body Torso (Anatomical Feline Silhouette: Head at Left) -->
-          <path d="M18 24 C14 24 10 20 12 16 C14 12 20 14 26 18 C32 12 36 14 36 17 L38 22 C44 24 55 26 70 26 C82 26 90 30 92 36 C88 42 78 44 65 44 C50 44 38 42 32 36 C28 36 22 34 18 24 Z" fill="#FFFFFF"/>
-          
-          <!-- Alert Ears -->
-          <polygon points="18,16 14,5 22,12" fill="#FFFFFF"/>
-          <polygon points="17,14 15,7 20,12" fill="#E6B0B8" opacity="0.75"/>
-          <polygon points="26,16 25,7 30,13" fill="#EAE4DE"/>
-          <polygon points="26,14 25,8 29,12" fill="#E6B0B8" opacity="0.6"/>
-
-          <!-- Body Depth Shadow -->
-          <path d="M34 37 C42 42 56 44 68 43 C78 42 86 38 90 36 C84 41 72 44 60 44 C46 44 36 42 34 37 Z" fill="#E0D8D0"/>
-
-          <!-- Golden Tabby Body Stripes (Torso & Flank ONLY — NO Stripes on Legs) -->
-          <path d="M42 27 C44 32 41 38 39 40 C41 38 43 32 41 27 Z" stroke="#E8C06A" stroke-width="2.8" stroke-linecap="round"/>
-          <path d="M52 27 C54 33 51 40 48 42 C51 40 53 33 51 27 Z" stroke="#D49E35" stroke-width="3" stroke-linecap="round"/>
-          <path d="M62 27 C64 33 61 40 58 42 C61 40 63 33 61 27 Z" stroke="#E8C06A" stroke-width="3" stroke-linecap="round"/>
-          <path d="M72 28 C74 33 71 39 68 41 C71 39 73 33 71 28 Z" stroke="#D49E35" stroke-width="2.8" stroke-linecap="round"/>
-          <path d="M82 30 C84 34 81 38 78 40 C81 38 83 34 81 30 Z" stroke="#E8C06A" stroke-width="2.5" stroke-linecap="round"/>
-
-          <!-- Hind Right Leg (Foreground, Clean Solid White, NO Stripes, Angled Forward Towards Face) -->
-          <g class="paw paw-b1">
-            <path d="M86 36 L78 58 C77 62 74 62 72 62 L81 58 L90 36 Z" fill="#FFFFFF"/>
-          </g>
-
-          <!-- Front Right Leg (Foreground, Clean Solid White, NO Stripes, Angled Forward Towards Face) -->
-          <g class="paw paw-f1">
-            <path d="M46 36 L38 58 C37 62 34 62 32 62 L41 58 L49 36 Z" fill="#FFFFFF"/>
-          </g>
-
-          <!-- Facial Features -->
-          <ellipse cx="20" cy="20" rx="2" ry="2.8" transform="rotate(15 20 20)" fill="#F2C94C"/>
-          <ellipse cx="20" cy="20" rx="0.8" ry="2.2" transform="rotate(15 20 20)" fill="#090607"/>
-          <polygon points="12,21 11,23 14,23" fill="#E6B0B8"/>
-          <line x1="12" y1="22" x2="2" y2="20" stroke="#D49E35" stroke-width="0.8"/>
-          <line x1="12" y1="24" x2="3" y2="25" stroke="#D49E35" stroke-width="0.8"/>
-        </g>
-      </svg>
+  <!-- Preloader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="loader-star" viewBox="0 0 40 40"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+      <span class="loader-word">Trisha<em>Pandey</em></span>
     </div>
+    <span class="loader-count"><span id="loaderNum">0</span>%</span>
   </div>
 
-  <!-- Header / Navigation -->
-  <header id="header">
-    <div class="header-container">
-      <a href="#hero" class="logo" aria-label="Home" data-cursor="grow">Trisha<span class="logo-dot">.</span></a>
-      <nav class="desktop-nav">
-        <a href="#work" data-cursor="grow">Work</a>
-        <a href="#about" data-cursor="grow">About</a>
-        <a href="#services" data-cursor="grow">Services</a>
-        <a href="#reels" data-cursor="grow">Reels</a>
-        <a href="#contact" data-cursor="grow">Contact</a>
-      </nav>
-      <button class="hamburger" aria-label="Toggle Navigation" data-cursor="grow">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
+  <!-- Custom cursor -->
+  <div class="cursor" aria-hidden="true"><span class="cursor-ring"><span class="cursor-label"></span></span></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Floating pill nav -->
+  <header class="nav" id="nav">
+    <a href="#home" class="nav-logo" data-hover aria-label="Trisha — home">Trisha<span>✦</span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <span class="nav-pill" aria-hidden="true"></span>
+      <a href="#home" class="nav-link" data-nav="home" data-hover>Home</a>
+      <a href="#about" class="nav-link" data-nav="about" data-hover>About</a>
+      <a href="#work" class="nav-link" data-nav="work" data-hover>Work</a>
+      <a href="#reels" class="nav-link" data-nav="reels" data-hover>Reels</a>
+    </nav>
+    <button class="nav-cta open-contact" data-hover>Let's Connect <span class="arrow">↗</span></button>
+    <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
   </header>
 
-  <!-- Mobile Nav Overlay -->
-  <nav class="mobile-nav">
-    <div class="mobile-nav-links">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#reels">Reels</a>
-      <a href="#contact">Contact</a>
+  <!-- Mobile menu -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu-links">
+      <a href="#home"><small>01</small><span>Home</span></a>
+      <a href="#about"><small>02</small><span>About</span></a>
+      <a href="#work"><small>03</small><span>Work</span></a>
+      <a href="#reels"><small>04</small><span>Reels</span></a>
+    </nav>
+    <div class="menu-foot">
+      <button class="btn btn-accent open-contact">Let's Connect <span class="arrow">↗</span></button>
+      <a href="mailto:trishapanday37@gmail.com">trishapanday37@gmail.com</a>
+      <a href="https://www.instagram.com/kiaracxfilms" target="_blank" rel="noopener">Instagram ↗</a>
     </div>
-  </nav>
+  </div>
 
-  <!-- Hero Section -->
-  <section id="hero">
-    <div class="hero-left">
-      <div class="eyebrow reveal d1">PORTFOLIO · 2026</div>
-      <h1 class="hero-name" aria-label="Trisha Pandey.">
-        <div class="text-line reveal d2">Trisha</div>
-        <div class="text-line reveal d3">Pandey.</div>
-      </h1>
-      <div class="hero-tagline reveal d4">
-        Graphic Designer & Video Editor<br>
-        Visual Storyteller & Brand Builder
-      </div>
-      <a href="#work" class="cta-button reveal d5" data-cursor="grow">◉ View My Work</a>
-    </div>
-    
-    <div class="hero-right reveal d3">
-      <div class="hero-doodle-container">
-        <div class="hero-doodle-backdrop"></div>
-        <img src="images/TrishaDoodle_transparent.png" alt="Trisha Pandey — Graphic Designer & Video Editor" class="hero-doodle-img" fetchpriority="high" decoding="async">
-      </div>
-      <div class="hero-glow radial-gold"></div>
-      <div class="hero-glow radial-blush"></div>
-      <div class="hero-badge">Bringing Brands to Life</div>
-    </div>
-    
-    <div class="scroll-indicator">↓</div>
-    <div class="bg-noise"></div>
-    <div class="bg-gradient-blob"></div>
-  </section>
+  <main>
 
-  <!-- Marquee / Divider -->
-  <section class="marquee-section">
-    <div class="marquee-track track-top">
-      <div class="marquee-content">
-        ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation
-      </div>
-    </div>
-    <div class="marquee-track track-bottom">
-      <div class="marquee-content">
-        ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation ✦ Graphic Design · Video Editing · Brand Detailing · Visual Storytelling · Content Creation
-      </div>
-    </div>
-  </section>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="home" data-bg="#F2EBE1" data-nav="home">
+      <h1 class="hero-name" aria-label="Trisha"><span class="hn-inner">Trisha</span></h1>
 
-  <!-- Work (Card Stack) -->
-  <section id="work">
-    <div class="section-header reveal">
-      <h2>Featured Work</h2>
-      <p class="section-label">Drag or Swipe to Explore</p>
-    </div>
-    <div class="stack-container" data-cursor="grow">
-      <!-- Cards will be injected via JS -->
-    </div>
-    <div class="stack-controls reveal d2">
-      <button class="nav-arrow prev-arrow" aria-label="Previous work" data-cursor="grow">←</button>
-      <div class="card-counter">01 / 18</div>
-      <button class="nav-arrow next-arrow" aria-label="Next work" data-cursor="grow">→</button>
-    </div>
-    <div class="swipe-hint">👈 Swipe</div>
-  </section>
+      <div class="hero-figure">
+        <svg class="spark s1" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+        <svg class="spark s2" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+        <svg class="spark s3" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+        <svg class="spark s4" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+        <svg class="spark s5" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+        <svg class="spark s6" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+        <div class="hero-glow" aria-hidden="true"></div>
+        <img src="images/web/TrishaDoodle_transparent.webp" width="400" height="600" alt="Illustration of Trisha Pandey" class="hero-img" fetchpriority="high">
+      </div>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="about-container">
-      <div class="about-right reveal d2">
-        <div class="eyebrow">01 — ABOUT</div>
-        <h2>A Creative Mind<br>at Work.</h2>
-        <div class="about-body">
-          <p>I'm Trisha Pandey — a graphic designer and video editor who thrives on transforming raw ideas into polished visual stories. From short-form social content and podcast edits to brand-focused design, I bring sharp attention to detail and a deep love for typography, color, and motion. Every project is a chance to craft something that looks intentional, feels authentic, and connects with its audience.</p>
-        </div>
-        
-        <div class="stats-row" id="stats">
-          <div class="stat-item">
-            <div class="stat-number">∞</div>
-            <div class="stat-label">Creative Ideas</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-target="2">0</div><span class="stat-suffix">+</span>
-            <div class="stat-label">Design Skills</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-target="100">0</div><span class="stat-suffix">%</span>
-            <div class="stat-label">Passion Driven</div>
-          </div>
-        </div>
+      <div class="hero-intro">
+        <p class="hi-hello">Hello, I'm</p>
+        <p class="hi-name">Trisha Pandey</p>
+        <p class="hi-tag">Graphic Designer &amp; Video Editor.<br><em>Bringing brands to life.</em></p>
       </div>
-    </div>
-    
-    <div class="quality-grid">
-      <div class="quality-card reveal d1">
-        <div class="q-num">01</div>
-        <h3>Professionally Clean</h3>
-        <p>balanced layouts, thoughtful color choices...</p>
-      </div>
-      <div class="quality-card reveal d2">
-        <div class="q-num">02</div>
-        <h3>More Creative</h3>
-        <p>turning ideas into visual stories...</p>
-      </div>
-      <div class="quality-card reveal d3">
-        <div class="q-num">03</div>
-        <h3>Skill-Focused</h3>
-        <p>poster design, brand design, video editing...</p>
-      </div>
-      <div class="quality-card reveal d4">
-        <div class="q-num">04</div>
-        <h3>Ever Growing</h3>
-        <p>sharpening skills every day...</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- Services Section -->
-  <section id="services">
-    <div class="section-label reveal">02 — SERVICES</div>
-    <h2 class="reveal d1">Services &<br>Expertise.</h2>
-    <div class="services-list reveal d2">
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">◈</div>
-          <div class="s-title">Graphic Design</div>
-          <div class="s-arrow">→</div>
+      <div class="hero-badge" aria-hidden="true">
+        <div class="badge-in">
+          <svg viewBox="0 0 200 200">
+            <defs><path id="badgeCircle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#badgeCircle">Graphic Designer ✦ Video Editor ✦ Storyteller ✦ </textPath></text>
+          </svg>
+          <span class="badge-core">✦</span>
         </div>
-        <div class="service-desc">Creating stunning visuals, from promotional posters to bespoke digital assets.</div>
       </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">▶</div>
-          <div class="s-title">Video Editing</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">Transforming raw footage into compelling stories with sharp cuts and rhythm.</div>
+
+      <div class="hero-scroll" aria-hidden="true"><span class="hs-line"></span>Scroll to explore</div>
+      <div class="hero-fade" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="ribbon" aria-hidden="true">
+      <div class="ribbon-track">
+        <span>Graphic Design</span><i>✦</i><span>Video Editing</span><i>✦</i><span>Brand Detailing</span><i>✦</i><span>Podcast Cuts</span><i>✦</i><span>Short-Form Reels</span><i>✦</i><span>Motion Graphics</span><i>✦</i>
       </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">✦</div>
-          <div class="s-title">Brand Detailing</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">Refining design aesthetics, typography detailing, and visual consistency across all brand touchpoints.</div>
-      </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">⚡</div>
-          <div class="s-title">Short-Form Editor</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">High-retention, dynamic edits for Reels, Shorts & TikTok (60 seconds to 90 seconds, up to 2 minutes max).</div>
-      </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">🎙</div>
-          <div class="s-title">Podcast Editor</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">Multi-cam syncing, seamless audio clean-up, pacing, and engaging highlight cuts for video & audio podcasts.</div>
-      </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">◉</div>
-          <div class="s-title">Content Creation</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">Designing assets tailored for social media engagement and digital impact.</div>
-      </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">⬡</div>
-          <div class="s-title">Visual Storytelling</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">Conveying deep narratives through visual mediums, rhythm, and framing.</div>
-      </div>
-      <div class="service-pill" data-cursor="grow">
-        <div class="service-header">
-          <div class="s-icon">◇</div>
-          <div class="s-title">Typography & Color</div>
-          <div class="s-arrow">→</div>
-        </div>
-        <div class="service-desc">Mastering type hierarchy, kinetic text dynamics, and rich color palettes for visual harmony.</div>
-      </div>
-      <!-- PENDING: Music Video Editing Category (Pending copy from Trisha — to be added here) -->
     </div>
 
-    <!-- Editing Specialties Grid -->
-    <div class="specialties-section reveal d3">
-      <div class="specialties-header">
-        <span class="spec-label">CORE FOCUS</span>
-        <h3>Editing Specialties</h3>
-      </div>
-      <div class="specialties-grid">
-        <div class="specialty-card" data-cursor="grow">
-          <div class="spec-icon">🎙</div>
-          <h4>Podcast Editor</h4>
-          <p>Seamless multi-cam syncing, dialogue cleanup, pacing, and viral clip extraction.</p>
-        </div>
-        <div class="specialty-card" data-cursor="grow">
-          <div class="spec-icon">◇</div>
-          <h4>Typography Editor</h4>
-          <p>Kinetic subtitle animations, expressive title treatments, and typographic layout precision.</p>
-        </div>
-        <div class="specialty-card" data-cursor="grow">
-          <div class="spec-icon">✦</div>
-          <h4>Motion Graphics Editor</h4>
-          <p>Custom graphic overlays, smooth transitions, lower thirds, and animated visual accents.</p>
-        </div>
-        <div class="specialty-card" data-cursor="grow">
-          <div class="spec-icon">⚡</div>
-          <h4>Short-Form Editor</h4>
-          <p class="spec-highlight">60 seconds to 90 seconds, up to 2 minutes max</p>
-          <p>Hook-first pacing, sound design, and viral retention edits for Reels & TikTok.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- ============ INTRO ============ -->
+    <section class="intro" id="about" data-bg="#FAF7F2" data-nav="about">
+      <span class="eyebrow">( About me )</span>
+      <p class="intro-text split-words">I turn raw ideas into polished <em>visual stories.</em> From scroll-stopping posters and brand detailing to podcast cuts and short-form edits, I care about typography, colour and motion, so every piece looks intentional, feels authentic and actually <em>connects</em> with its audience.</p>
+      <a href="#archive" class="btn btn-brown" data-hover>View My Work <span class="arrow">↗</span></a>
+    </section>
 
-  <!-- Tools Section -->
-  <section id="tools">
-    <div class="section-label reveal">03 — TOOLKIT</div>
-    <h2 class="reveal d1">My Toolkit.</h2>
-    <div class="tools-cloud reveal d2">
-      <!-- 1. Photoshop -->
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M3 3h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm4.5 5.5v7h2v-2.2h1.6c1.6 0 2.8-.9 2.8-2.4 0-1.6-1.1-2.4-2.8-2.4H7.5zm2 1.6h1.2c.7 0 1.2.3 1.2.8s-.5.8-1.2.8H9.5v-1.6zm7 2.1c-.8 0-1.4.3-1.8.7l.8 1.1c.3-.3.6-.5 1-.5.4 0 .7.2.7.5 0 .2-.2.4-.6.5l-.8.3c-1.1.4-1.6 1-1.6 1.8 0 1.2.9 2 2.2 2 .9 0 1.6-.4 2-.8l-.8-1.1c-.3.3-.7.5-1.1.5-.4 0-.7-.2-.7-.5 0-.3.2-.4.6-.5l.8-.3c1.2-.4 1.7-1 1.7-1.8 0-1.2-.9-1.9-2.3-1.9z"/>
-        </svg>
-        Photoshop
-      </div>
-      <!-- 2. Premiere Pro -->
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M3 3h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3.5 5.5v7h2v-2.2h1.5c1.6 0 2.7-.9 2.7-2.4 0-1.6-1.1-2.4-2.7-2.4H6.5zm2 1.6h1.2c.6 0 1.1.3 1.1.8s-.5.8-1.1.8H8.5v-1.6zm6.5 2.1v3.3h1.8v-1.8c0-.6.4-1 1-1h.2v-1.7c-.8 0-1.4.4-1.8.9v-.7H15z"/>
-        </svg>
-        Premiere Pro
-      </div>
-      <!-- 3. DaVinci Resolve -->
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 4.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5S8.5 10.38 8.5 9s1.12-2.5 2.5-2.5zm-4 8c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5S7 15.88 7 14.5zm8 1c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-        </svg>
-        DaVinci Resolve
-      </div>
-      <!-- 4. Adobe Express -->
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M12 2L2 19.5h7l2-4 1.5 3h3.5L12 2zm0 5.5l2.5 5h-5L12 7.5zM17 19.5h5L17.5 11l-2.5 5 2 3.5z"/>
-        </svg>
-        Adobe Express
-      </div>
-      <!-- 5. Figma -->
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-3H8v-3h3V7.5C11 6.12 12.12 5 13.5 5H16v3h-2.5c-.28 0-.5.22-.5.5v2H16v3h-3v3h-2z"/>
-        </svg>
-        Figma
-      </div>
-      <!-- 6. Canva -->
-      <div class="tool-tag" data-cursor="grow">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/>
-        </svg>
-        Canva
-      </div>
-    </div>
-    <div class="quote-block reveal d3">
-      <div class="quote-mark">"</div>
-      <p>Design is not just what it looks like and feels like.<br>Design is how it works.</p>
-      <div class="quote-author">— Steve Jobs</div>
-    </div>
-  </section>
+    <!-- ============ SERVICES ============ -->
+    <section class="services" id="services" data-bg="#F2EBE1" data-nav="about">
+      <h2 class="services-title"><span class="line"><span>What I can</span></span><span class="line"><span>Help you <em>with?</em></span></span></h2>
 
-  <!-- Video Reels Section -->
-  <section id="reels">
-    <div class="section-label reveal">04 — REELS</div>
-    <h2 class="reveal d1">Video Work.</h2>
-    <div class="reels-track-container reveal d2">
-      <div class="reels-track" id="reels-track">
-        <!-- Reel items injected via JS -->
-      </div>
-    </div>
-    
-    <div class="ig-banner reveal d3">
-      <div class="ig-icon">IG</div>
-      <div class="ig-info">
-        <div class="ig-handle">@kiaracxfilms</div>
-        <div class="ig-sub">Follow for more edits & visual storytelling</div>
-      </div>
-      <a href="https://www.instagram.com/kiaracxfilms" target="_blank" class="ig-btn" data-cursor="grow">Visit Profile →</a>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="contact-container">
-      <div class="contact-left reveal">
-        <div class="eyebrow">05 — CONTACT</div>
-        <h2>Let's Create<br>Together.</h2>
-        <p class="contact-body">Have a project in mind? Whether it's a brand detailing project, podcast edit, or short-form video edit — I'd love to hear about it.</p>
-        
-        <div class="contact-list">
-          <a href="mailto:trishapanday37@gmail.com" class="contact-row" data-cursor="grow">
-            <div class="contact-icon">@</div>
-            <div class="contact-details">
-              <div class="contact-label">Email</div>
-              <div class="contact-value">trishapanday37@gmail.com</div>
+      <div class="cards">
+        <article class="card c1" data-hover>
+          <div class="card-inner">
+            <div class="card-top">
+              <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2AD4F5"/><stop offset="1" stop-color="#1B3FD6"/></linearGradient></defs><g class="ring-lines" stroke="url(#g1)"></g></svg>
+              <svg class="glyph" viewBox="0 0 40 40" aria-hidden="true"><rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/></svg>
             </div>
-            <div class="contact-arrow">→</div>
-          </a>
-          <a href="tel:+919954300971" class="contact-row" data-cursor="grow">
-            <div class="contact-icon">☏</div>
-            <div class="contact-details">
-              <div class="contact-label">Phone</div>
-              <div class="contact-value">+91 9954 300 971</div>
-            </div>
-            <div class="contact-arrow">→</div>
-          </a>
-          <a href="https://www.instagram.com/kiaracxfilms" target="_blank" class="contact-row" data-cursor="grow">
-            <div class="contact-icon">IG</div>
-            <div class="contact-details">
-              <div class="contact-label">Instagram</div>
-              <div class="contact-value">@kiaracxfilms</div>
-            </div>
-            <div class="contact-arrow">→</div>
-          </a>
-          <a href="https://linkedin.com/in/trisha-panday-4820943ba" target="_blank" class="contact-row" data-cursor="grow">
-            <div class="contact-icon">in</div>
-            <div class="contact-details">
-              <div class="contact-label">LinkedIn</div>
-              <div class="contact-value">Trisha Panday</div>
-            </div>
-            <div class="contact-arrow">→</div>
-          </a>
-        </div>
-      </div>
-      
-      <div class="contact-right reveal d2">
-        <form id="contact-form" action="https://formspree.io/f/mgopwryo" method="POST">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required placeholder="Your name">
+            <div class="card-label" style="--lg:linear-gradient(90deg,#1B3FD6,#2AD4F5)">Graphic<br>Design</div>
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="your@email.com">
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
-          </div>
-          <button type="submit" class="submit-btn" data-cursor="grow">Send Message</button>
-        </form>
-      </div>
-    </div>
-  </section>
+        </article>
 
-  <!-- Footer -->
-  <footer id="footer">
-    <div class="footer-top reveal">
-      <h2 class="footer-logo">Trisha Pandey<span class="logo-dot">.</span></h2>
+        <article class="card c2" data-hover>
+          <div class="card-inner">
+            <div class="card-top">
+              <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF4FB8"/><stop offset="1" stop-color="#7B2FF7"/></linearGradient></defs><g class="ring-lines" stroke="url(#g2)"></g></svg>
+              <svg class="glyph" viewBox="0 0 40 40" aria-hidden="true"><path d="M12 7L33 20L12 33Z"/></svg>
+            </div>
+            <div class="card-label" style="--lg:linear-gradient(90deg,#7B2FF7,#FF4FB8)">Video<br>Editing</div>
+          </div>
+        </article>
+
+        <article class="card c3" data-hover>
+          <div class="card-inner">
+            <div class="card-top">
+              <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB03A"/><stop offset="1" stop-color="#F0263C"/></linearGradient></defs><g class="ring-lines" stroke="url(#g3)"></g></svg>
+              <svg class="glyph" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3C20.7 12 28 19.3 37 20C28 20.7 20.7 28 20 37C19.3 28 12 20.7 3 20C12 19.3 19.3 12 20 3Z"/></svg>
+            </div>
+            <div class="card-label" style="--lg:linear-gradient(90deg,#F0263C,#FFB03A)">Brand<br>Detailing</div>
+          </div>
+        </article>
+
+        <article class="card c4" data-hover>
+          <div class="card-inner">
+            <div class="card-top">
+              <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE53B"/><stop offset="1" stop-color="#16C47F"/></linearGradient></defs><g class="ring-lines" stroke="url(#g4)"></g></svg>
+              <svg class="glyph" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="15" width="4" height="10" rx="2"/><rect x="14" y="9" width="4" height="22" rx="2"/><rect x="21" y="5" width="4" height="30" rx="2"/><rect x="28" y="12" width="4" height="16" rx="2"/></svg>
+            </div>
+            <div class="card-label" style="--lg:linear-gradient(90deg,#16C47F,#FFE53B)">Podcast &amp;<br>Short-Form</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ VISUAL ARCHIVE ============ -->
+    <section class="archive" id="archive" data-bg="#FAF7F2" data-nav="work">
+      <div class="archive-sticky">
+        <h2 class="archive-title">Visual<br>Archive</h2>
+        <p class="archive-hint">Tap any piece to view it</p>
+      </div>
+      <div class="archive-layer" id="archiveLayer"><!-- injected --></div>
+    </section>
+
+    <!-- ============ TOOLKIT ============ -->
+    <section class="toolkit" id="toolkit" data-bg="#0E0B09" data-nav="work">
+      <h2 class="toolkit-title">My Creative<br><em>Toolkit</em></h2>
+      <p class="toolkit-hint">( grab &amp; toss the cards )</p>
+      <div class="tool-cards" id="toolCards"><!-- injected --></div>
+    </section>
+
+    <!-- ============ BEYOND THE VISUALS ============ -->
+    <section class="beyond" id="work" data-bg="#0E0B09" data-nav="work">
+      <div class="beyond-marquee"><h2 class="beyond-title">Beyond the <em>Visuals</em></h2></div>
+      <div class="tabs-wrap">
+        <div class="tabs" role="tablist" id="tabs"><span class="tab-pill" aria-hidden="true"></span><!-- injected --></div>
+      </div>
+      <div class="work-grid" id="workGrid"><!-- injected --></div>
+      <div class="center"><a href="https://www.instagram.com/kiaracxfilms" target="_blank" rel="noopener" class="btn btn-accent" data-hover>See More on Instagram <span class="arrow">↗</span></a></div>
+    </section>
+
+    <!-- ============ VIDEO EDITING ============ -->
+    <section class="video" id="reels" data-bg="#FAF7F2" data-nav="reels">
+      <h2 class="video-title" aria-label="Video Editing" id="videoTitle">VideoEditing</h2>
+      <div class="reels" id="reelsRow"><!-- injected --></div>
+
+      <div class="specialties">
+        <div class="spec"><span>01</span><h3>Podcast Editor</h3><p>Multi-cam syncing, dialogue clean-up, pacing and viral clip extraction.</p></div>
+        <div class="spec"><span>02</span><h3>Typography Editor</h3><p>Kinetic subtitles, expressive titles and precise typographic layouts.</p></div>
+        <div class="spec"><span>03</span><h3>Motion Graphics</h3><p>Custom overlays, smooth transitions, lower thirds and animated accents.</p></div>
+        <div class="spec"><span>04</span><h3>Short-Form Editor</h3><p>Hook-first pacing and retention edits for Reels &amp; Shorts — 60–90 sec, up to 2 min.</p></div>
+      </div>
+
+      <a class="ig-line" href="https://www.instagram.com/kiaracxfilms" target="_blank" rel="noopener" data-hover>@kiaracxfilms — follow for more edits &amp; visual storytelling <span class="arrow">↗</span></a>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="contact" data-bg="#F26A1B" data-nav="contact">
+      <svg class="cta-spark cs1" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+      <svg class="cta-spark cs2" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+      <svg class="cta-spark cs3" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0C20.8 10.5 29.5 19.2 40 20C29.5 20.8 20.8 29.5 20 40C19.2 29.5 10.5 20.8 0 20C10.5 19.2 19.2 10.5 20 0Z"/></svg>
+      <h2 class="cta-title"><span class="line"><span>Great things</span></span><span class="line"><span><em>begin together.</em></span></span></h2>
+      <p class="cta-sub">From brand posters to podcast cuts and scroll-stopping reels,<br>let's make something people remember.</p>
+      <button class="btn btn-white btn-lg open-contact" data-hover>Let's Connect <span class="arrow">↗</span></button>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <p class="footer-tag">Visual Storyteller.<br>Brand Builder.<br><em>Bringing brands to life.</em></p>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#home" data-hover>Home</a>
+        <a href="#about" data-hover>About</a>
+        <a href="#work" data-hover>Work</a>
+        <a href="#reels" data-hover>Reels</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Me</h4>
+        <a href="https://www.instagram.com/kiaracxfilms" target="_blank" rel="noopener" data-hover>Instagram</a>
+        <a href="https://linkedin.com/in/trisha-panday-4820943ba" target="_blank" rel="noopener" data-hover>LinkedIn</a>
+        <a href="mailto:trishapanday37@gmail.com" data-hover>trishapanday37@gmail.com</a>
+        <a href="tel:+919954300971" data-hover>+91 99543 00971</a>
+      </div>
     </div>
-    <div class="footer-middle reveal d1">
-      <a href="#about" data-cursor="grow">About</a>
-      <a href="#work" data-cursor="grow">Work</a>
-      <a href="#services" data-cursor="grow">Services</a>
-      <a href="#reels" data-cursor="grow">Reels</a>
-      <a href="#contact" data-cursor="grow">Contact</a>
-    </div>
-    <div class="footer-social reveal d2">
-      <a href="https://www.instagram.com/kiaracxfilms" target="_blank" class="social-icon" aria-label="Instagram" data-cursor="grow">IG</a>
-      <a href="https://linkedin.com/in/trisha-panday-4820943ba" target="_blank" class="social-icon" aria-label="LinkedIn" data-cursor="grow">in</a>
-      <a href="mailto:trishapanday37@gmail.com" class="social-icon" aria-label="Email" data-cursor="grow">@</a>
-      <a href="tel:+919954300971" class="social-icon" aria-label="Phone" data-cursor="grow">☏</a>
-    </div>
+    <div class="footer-giant" aria-hidden="true" id="footerGiant">Trisha</div>
     <div class="footer-bottom">
-      © 2026 Trisha Pandey · All rights reserved
+      <span>Proudly crafted in India</span>
+      <span>©2026 Trisha Pandey</span>
+      <a href="#home" class="to-top" data-hover>Back to top ↑</a>
     </div>
   </footer>
 
-  <!-- Scroll-to-Top Button -->
-  <button id="scroll-top" aria-label="Scroll to top" data-cursor="grow">↑</button>
-
-  <!-- Instagram Modal -->
-  <div class="reel-modal-overlay" id="reel-modal">
-    <button class="modal-close" data-cursor="grow">✕</button>
-    <button class="modal-nav modal-prev" data-cursor="grow">←</button>
-    <div class="swipe-zone left-zone"></div>
-    <div class="modal-content" id="modal-content"></div>
-    <div class="swipe-zone right-zone"></div>
-    <button class="modal-nav modal-next" data-cursor="grow">→</button>
+  <!-- ============ CONTACT MODAL ============ -->
+  <div class="modal" id="contactModal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Contact Trisha">
+      <button class="modal-close" data-hover aria-label="Close">✕</button>
+      <h3>Let's <em>talk.</em></h3>
+      <p class="modal-sub">Brand project, podcast edit or a short-form series? Tell me about it.</p>
+      <div class="modal-links">
+        <a href="mailto:trishapanday37@gmail.com" data-hover>trishapanday37@gmail.com</a>
+        <a href="tel:+919954300971" data-hover>+91 99543 00971</a>
+      </div>
+      <form id="contactForm" action="https://formspree.io/f/mgopwryo" method="POST">
+        <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+        <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
+        <textarea name="message" rows="4" placeholder="Tell me about your project…" required></textarea>
+        <button type="submit" class="btn btn-brown" data-hover>Send Message <span class="arrow">↗</span></button>
+        <p class="form-status" id="formStatus" role="status"></p>
+      </form>
+    </div>
   </div>
 
-  <script src="script.js?v=2.0"></script>
+  <!-- ============ MEDIA MODAL (images + reels) ============ -->
+  <div class="media-modal" id="mediaModal" aria-hidden="true">
+    <button class="modal-close light" data-hover aria-label="Close">✕</button>
+    <div class="media-content" id="mediaContent"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="script.js?v=4.1"></script>
 </body>
 </html>
