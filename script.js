@@ -2,14 +2,33 @@
    Trisha Pandey — Portfolio v4
    GSAP + ScrollTrigger + Lenis (smooth scroll) + Matter.js (toolkit physics)
    ========================================================= */
-(() => {
+(async () => {
   'use strict';
 
-  /* ---------------- DATA ---------------- */
-  const IMG = 'images/web/';
+  /* ---------------- CONTENT ----------------
+     Designs and videos are managed by Trisha in the Sanity editor
+     (https://trisha-portfolio.sanity.studio) and loaded here on every visit.
+     The built-in lists below are only a backup for when Sanity can't be reached. */
+  const SANITY = { projectId: 'vhmnscgr', dataset: 'production', apiVersion: '2025-02-19' };
+  const QUERY = `{
+    "tabs": *[_type == "category"] | order(orderRank) {
+      "name": title,
+      "items": *[_type == "artwork" && references(^._id) && defined(image.asset)] | order(orderRank) {
+        title, "label": caption, wide, "url": image.asset->url
+      }
+    },
+    "archive": *[_type == "artwork" && showInArchive != false && defined(image.asset)] | order(orderRank) {
+      title, wide, "url": image.asset->url
+    },
+    "videos": *[_type == "reel"] | order(orderRank) {
+      title, label, "instagram": instagramUrl, "cover": cover.asset->url,
+      "playbackId": video.asset->playbackId, "status": video.asset->status
+    }
+  }`;
+  const LOCAL = n => 'images/web/' + n + '.webp';
 
   // Visual Archive — floating pieces (order = scroll order)
-  const archive = [
+  const archiveLocal = [
     'cafe-poster', 'picsart-3', 'coffee-menu', 'fashion-instagram-post',
     'picsart-1', 'online-course-poster', 'picsart-8', 'kiara-advani-design',
     'picsart-5', 'science-event-poster', 'picsart-2', 'vlog-routine-thumbnail',
@@ -17,7 +36,7 @@
   ];
 
   // Beyond the Visuals — tabs
-  const work = {
+  const workLocal = {
     'Editorial Posters': [
       { img: 'picsart-1',  title: 'Extra — Editorial Cover',   cat: 'Poster Series' },
       { img: 'picsart-2',  title: 'Extra — Pink Edition',      cat: 'Poster Series' },
@@ -45,12 +64,60 @@
   };
 
   // Reels — Instagram ids (opens embed)
-  const reels = [
+  const reelsLocal = [
     { id: 'DT8LdexEqbJ', title: 'Mid-Form Celebrity Edit', desc: 'Social Media', img: 'https://i.pinimg.com/736x/35/8d/c1/358dc12cb6009f28cc2eef113c81168e.jpg' },
     { id: 'DQw01UbkrWm', title: 'Women in Love',          desc: 'Short Reel',   img: 'https://i.pinimg.com/736x/a3/6e/bc/a36ebc55fcbe8e88f00dd8a9fd1cbc94.jpg' },
     { id: 'DSbuHJHkhEJ', title: 'Kiara Advani Edit',      desc: 'Fan Edit',     img: 'https://i.pinimg.com/736x/c7/98/a6/c798a66e7d4765f2d700843aafee2286.jpg' },
     { id: 'DQraUbUkie3', title: 'Short-Form Content',     desc: 'Social Media', img: 'https://i.pinimg.com/736x/82/90/25/82902575d2b4c5d6a88a50fce2f772e4.jpg' }
   ];
+
+  const fallback = {
+    archive: archiveLocal.map(n => ({ thumb: LOCAL(n), full: LOCAL(n), wide: /kiara|vlog/.test(n) })),
+    tabs: Object.entries(workLocal).map(([name, items]) => ({
+      name,
+      items: items.map(w => ({ thumb: LOCAL(w.img), full: LOCAL(w.img), title: w.title, label: w.cat, wide: !!w.wide }))
+    })),
+    videos: reelsLocal.map(r => ({ title: r.title, label: r.desc, cover: r.img, instagram: `https://www.instagram.com/p/${r.id}/` }))
+  };
+
+  // Sanity image CDN resizes on the fly and serves WebP/AVIF automatically
+  const sized = (url, w) => `${url}?w=${w}&fit=max&auto=format&q=82`;
+  const muxThumb = id => `https://image.mux.com/${id}/thumbnail.webp?width=720&time=1`;
+
+  // Each part falls back to the built-in list on its own, so the site is never empty.
+  const loadContent = async () => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    try {
+      const { projectId, dataset, apiVersion } = SANITY;
+      const res = await fetch(`https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodeURIComponent(QUERY)}`, { signal: ctrl.signal });
+      if (!res.ok) throw new Error('Sanity ' + res.status);
+      const { result } = await res.json();
+      const tabs = (result.tabs || []).filter(t => t.items.length).map(t => ({
+        name: t.name,
+        items: t.items.map(i => ({ thumb: sized(i.url, 800), full: sized(i.url, 1800), title: i.title || '', label: i.label || '', wide: !!i.wide }))
+      }));
+      const archive = (result.archive || []).map(i => ({ thumb: sized(i.url, 700), full: sized(i.url, 1800), wide: !!i.wide }));
+      const videos = (result.videos || [])
+        .filter(v => (v.playbackId && v.status !== 'errored') || v.instagram)
+        .map(v => ({
+          title: v.title || '', label: v.label || '', instagram: v.instagram,
+          playbackId: v.playbackId,
+          cover: v.cover ? sized(v.cover, 720) : (v.playbackId ? muxThumb(v.playbackId) : '')
+        }));
+      return {
+        tabs: tabs.length ? tabs : fallback.tabs,
+        archive: archive.length ? archive : fallback.archive,
+        videos: videos.length ? videos : fallback.videos
+      };
+    } catch (err) {
+      console.warn('Using built-in portfolio content:', err.message);
+      return fallback;
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+  const content = await loadContent();
 
   // Toolkit — polaroid cards. x/y/r = resting place used only when physics is unavailable
   const tools = [
@@ -68,6 +135,7 @@
   /* ---------------- HELPERS ---------------- */
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const MOBILE_Q = '(max-width: 768px)';
   const isMobile = () => window.matchMedia(MOBILE_Q).matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -125,11 +193,12 @@
     archiveItems = [];
     const lanesD = [5, 27, 53, 75];
     const widthsD = [15, 13, 14, 16, 12, 14];
-    archive.forEach((src, i) => {
+    const archive = content.archive;
+    archive.forEach((item, i) => {
       const el = document.createElement('figure');
       el.className = 'a-item';
       el.dataset.cursor = 'View';
-      const wide = /kiara|vlog/.test(src);
+      const wide = item.wide;
       let left, width;
       if (mob) {
         left = i % 2 === 0 ? 4 : 52;
@@ -146,8 +215,8 @@
       el.style.width = width + 'vw';
       el.dataset.speed = mob ? (0.8 + ((i * 37) % 5) / 10).toFixed(2) : (0.6 + ((i * 37) % 9) / 10).toFixed(2);
       el.dataset.rot = (((i * 53) % 9) - 4) * 0.8;
-      el.innerHTML = `<div class="a-item-in"><img src="${IMG + src}.webp" alt="Design by Trisha Pandey" fetchpriority="low" decoding="async"></div>`;
-      el.addEventListener('click', () => openMedia(`<img src="${IMG + src}.webp" alt="">`));
+      el.innerHTML = `<div class="a-item-in"><img src="${esc(item.thumb)}" alt="${esc(item.title || 'Design by Trisha Pandey')}" fetchpriority="low" decoding="async"></div>`;
+      el.addEventListener('click', () => openMedia(`<img src="${esc(item.full)}" alt="">`));
       archiveLayer.appendChild(el);
       archiveItems.push(el);
     });
@@ -193,21 +262,21 @@
     tabPill.style.width = a.offsetWidth + 'px';
     tabPill.style.transform = `translateX(${a.offsetLeft}px)`;
   };
-  const renderGrid = (cat, anim) => {
-    grid.innerHTML = work[cat].map(w => `
-      <div class="w-card${w.wide ? ' wide' : ''}" data-cursor="View" data-src="${IMG + w.img}.webp">
-        <img src="${IMG + w.img}.webp" alt="${w.title}" loading="lazy" decoding="async">
-        <div class="w-meta"><small>${w.cat}</small><h3>${w.title}</h3></div>
+  const renderGrid = (tabIndex, anim) => {
+    grid.innerHTML = content.tabs[tabIndex].items.map(w => `
+      <div class="w-card${w.wide ? ' wide' : ''}" data-cursor="View" data-src="${esc(w.full)}">
+        <img src="${esc(w.thumb)}" alt="${esc(w.title)}" loading="lazy" decoding="async">
+        <div class="w-meta">${w.label ? `<small>${esc(w.label)}</small>` : ''}<h3>${esc(w.title)}</h3></div>
       </div>`).join('');
     $$('.w-card', grid).forEach(c => c.addEventListener('click', () => openMedia(`<img src="${c.dataset.src}" alt="">`)));
     if (anim && hasGSAP) {
       gsap.fromTo($$('.w-card', grid), { y: 50, autoAlpha: 0, scale: .96 }, { y: 0, autoAlpha: 1, scale: 1, duration: .9, stagger: .05, ease: 'expo.out', onComplete: () => ScrollTrigger.refresh() });
     } else if (hasGSAP) ScrollTrigger.refresh();
   };
-  Object.keys(work).forEach((cat, i) => {
+  content.tabs.forEach((tab, i) => {
     const b = document.createElement('button');
     b.className = 'tab' + (i === 0 ? ' active' : '');
-    b.textContent = cat;
+    b.textContent = tab.name;
     b.setAttribute('role', 'tab');
     b.setAttribute('data-hover', '');
     b.addEventListener('click', () => {
@@ -216,22 +285,81 @@
       b.classList.add('active');
       moveTabPill();
       b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-      if (hasGSAP) gsap.to($$('.w-card', grid), { autoAlpha: 0, y: -20, duration: .3, stagger: .02, ease: 'power2.in', onComplete: () => renderGrid(cat, true) });
-      else renderGrid(cat, false);
+      if (hasGSAP) gsap.to($$('.w-card', grid), { autoAlpha: 0, y: -20, duration: .3, stagger: .02, ease: 'power2.in', onComplete: () => renderGrid(i, true) });
+      else renderGrid(i, false);
     });
     tabsEl.appendChild(b);
   });
 
-  /* ---------------- BUILD: reels ---------------- */
+  /* ---------------- BUILD: videos ----------------
+     Uploaded videos stream from Mux (HLS) through hls.js, which is loaded only when
+     a video first needs it. Browsers without Media Source support (older iPhones)
+     use their built-in HLS player instead. */
   const reelsRow = $('#reelsRow');
-  reels.forEach((r, i) => {
+  let hlsLib;
+  const loadHls = () => hlsLib || (hlsLib = new Promise(resolve => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js';
+    s.onload = () => resolve(window.Hls);
+    s.onerror = () => resolve(null);
+    document.head.appendChild(s);
+  }));
+  const attachStream = async (video, playbackId, preview) => {
+    if (video.dataset.src) return;
+    const src = video.dataset.src = `https://stream.mux.com/${playbackId}.m3u8`;
+    const nativeHls = !!video.canPlayType('application/vnd.apple.mpegurl');
+    const mse = 'MediaSource' in window || 'ManagedMediaSource' in window;
+    if (!mse && nativeHls) { video.src = src; return; }
+    const Hls = await loadHls();
+    if (Hls && Hls.isSupported()) {
+      const hls = new Hls({ capLevelToPlayerSize: true, startLevel: preview ? 0 : -1, maxBufferLength: preview ? 10 : 30 });
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      video._hls = hls;
+      await new Promise(resolve => hls.once(Hls.Events.MANIFEST_PARSED, resolve));
+    } else {
+      video.src = src;
+    }
+  };
+  const igEmbed = url => {
+    const m = /instagram\.com\/(?:[^/]+\/)?(?:p|reel|reels|tv)\/([^/?#]+)/.exec(url || '');
+    return m ? `https://www.instagram.com/p/${m[1]}/embed/` : null;
+  };
+  const openVideo = v => {
+    if (v.playbackId) {
+      openMedia(`<video class="media-video" controls autoplay playsinline poster="${esc(v.cover)}"></video>`);
+      const player = $('video', mediaContent);
+      attachStream(player, v.playbackId, false).then(() => player.play().catch(() => {}));
+    } else if (igEmbed(v.instagram)) {
+      openMedia(`<iframe src="${esc(igEmbed(v.instagram))}" allowtransparency="true" scrolling="no" title="${esc(v.title)}"></iframe>`);
+    } else if (v.instagram) {
+      window.open(v.instagram, '_blank', 'noopener');
+    }
+  };
+  const previewObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(en => {
+    const card = en.target;
+    const video = $('video', card);
+    if (en.isIntersecting) {
+      attachStream(video, card.dataset.playback, true).then(() => video.play().catch(() => {}));
+    } else if (!video.paused) {
+      video.pause();
+    }
+  }), { rootMargin: '-25% 0px -25% 0px' }) : null; // plays while the card overlaps the middle half of the screen
+  content.videos.forEach((v, i) => {
     const el = document.createElement('div');
     el.className = 'reel';
     el.dataset.cursor = 'Play';
-    el.innerHTML = `<img src="${r.img}" alt="${r.title}" loading="lazy" decoding="async">
+    el.innerHTML = `${v.cover ? `<img src="${esc(v.cover)}" alt="${esc(v.title)}" loading="lazy" decoding="async">` : ''}
+      ${v.playbackId ? '<video muted loop playsinline preload="none" aria-hidden="true"></video>' : ''}
       <div class="play"><svg viewBox="0 0 20 20"><path d="M4 2l14 8-14 8z"/></svg></div>
-      <div class="r-meta"><small>${String(i + 1).padStart(2, '0')} · ${r.desc}</small><h3>${r.title}</h3></div>`;
-    el.addEventListener('click', () => openMedia(`<iframe src="https://www.instagram.com/p/${r.id}/embed/" allowtransparency="true" scrolling="no" title="${r.title}"></iframe>`));
+      <div class="r-meta"><small>${String(i + 1).padStart(2, '0')}${v.label ? ' · ' + esc(v.label) : ''}</small><h3>${esc(v.title)}</h3></div>`;
+    el.addEventListener('click', () => openVideo(v));
+    if (v.playbackId) {
+      el.dataset.playback = v.playbackId;
+      const video = $('video', el);
+      video.addEventListener('playing', () => el.classList.add('live'));
+      if (previewObserver) previewObserver.observe(el);
+    }
     reelsRow.appendChild(el);
   });
 
@@ -251,6 +379,8 @@
   function openMedia(html) { mediaContent.innerHTML = html; mediaModal.classList.add('open'); mediaModal.setAttribute('aria-hidden', 'false'); lock(true); }
   const closeMedia = () => {
     if (!mediaModal.classList.contains('open')) return;
+    const player = $('video', mediaContent);
+    if (player) { player.pause(); if (player._hls) player._hls.destroy(); }
     mediaModal.classList.remove('open'); mediaModal.setAttribute('aria-hidden', 'true'); lock(false);
     setTimeout(() => (mediaContent.innerHTML = ''), 450);
   };
@@ -332,7 +462,7 @@
     }
   }
 
-  renderGrid(Object.keys(work)[0], false);
+  renderGrid(0, false);
   requestAnimationFrame(moveTabPill);
 
   /* ---------------- TOOLKIT PHYSICS ---------------- */

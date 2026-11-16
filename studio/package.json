@@ -1,0 +1,22 @@
+{
+  "name": "trisha-portfolio-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Content editor for Trisha Pandey's portfolio (Sanity Studio)",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "import": "sanity exec scripts/import-existing.js --with-user-token"
+  },
+  "dependencies": {
+    "@sanity/orderable-document-list": "^2.0.29",
+    "lexorank": "^1.0.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sanity": "^6.23.0",
+    "sanity-plugin-mux-input": "^5.3.0",
+    "styled-components": "^6.6.0"
+  }
+}
